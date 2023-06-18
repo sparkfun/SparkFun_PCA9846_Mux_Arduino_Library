@@ -1,0 +1,31 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SparkFun_PCA9846	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+isConnected	KEYWORD2
+getUniqueId	KEYWORD2
+setPort	KEYWORD2
+setPortState	KEYWORD2
+getPort	KEYWORD2
+getPortState	KEYWORD2
+enablePort	KEYWORD2
+disablePort	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+SFE_PCA9846_MUX_DEFAULT_ADDRESS	LITERAL1
+SFE_PCA9846_MUX_DEVICE_ID_ADDRESS	LITERAL1
+SFE_PCA9846_MUX_DEVICE_ID	LITERAL1
