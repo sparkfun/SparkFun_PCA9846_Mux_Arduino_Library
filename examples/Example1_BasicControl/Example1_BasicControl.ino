@@ -3,14 +3,30 @@
   By: Paul Clark @ SparkFun Electronics
   Date: June 18th, 2023
 
-  Some I2C devices respond to only one I2C address. This can be a problem
-  when you want to hook multiple of a device to the I2C bus. An I2C Mux
-  solves this issue by allowing you to change the 'channel' or port that
-  the master is talking to.
+  Some I2C devices respond to only one I2C address. This can be a problem when you
+  want to hook multiple devices to the I2C bus. An I2C Mux solves this issue by
+  allowing you to select which port or ports are connected to the main bus.
 
   This example shows how to connect to different ports.
-  The PCA9846 is a mux. This means when you setPort(1) then the SDA and SCL lines of the Arduino I2C port
-  are connected to port 1 (only). All I2C traffic will be passed to/from to whatever sensor you have on port 1.
+  The PCA9846 is a mux. This means that when you call myMux.setPort(1) then the SDA and SCL
+  lines of the Arduino I2C bus are connected to port 1 only. All I2C traffic will
+  be passed to/from to whatever sensor you have on port 1.
+
+  If you want to enable / disable multiple ports simultaneously, call setPortState.
+  Bit 0 (1 decimal) enables port 0; bit 1 (2 decimal) enables port 1; etc.
+  E.g. to enable ports 1 and 2 only, leaving ports 0 and 3 disabled, call myMux.setPortState(2 + 4)
+
+  If you want to selectively enable or disable a single port, call enablePort / disablePort.
+  E.g.:
+  myMux.disablePort(0);
+  myMux.enablePort(1);
+  myMux.enablePort(2);
+  myMux.disablePort(3);
+
+  The PCA9846 appears on two I2C addresses:
+  * The mux address defined by the A0-A4 jumpers
+  * Address 0x7C - which is used to read the Device ID
+  * See Example2 for more details
 
   Hardware Connections:
   Attach the PCA9846 Qwiic Mux to your RedBoard or Uno.
@@ -19,7 +35,7 @@
 
   SparkFun labored with love to create this code. Feel like supporting open
   source? Buy a board from SparkFun!
-  https://www.sparkfun.com/products/14685
+  https://www.sparkfun.com/products/22362
 */
 
 #include <Wire.h>

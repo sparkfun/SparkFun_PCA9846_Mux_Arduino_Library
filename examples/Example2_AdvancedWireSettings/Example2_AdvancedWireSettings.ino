@@ -5,7 +5,7 @@
 
   This library supports different Wire ports and different I2C addresses
   of the mux itself. By sending the mux address to the library you can
-  have up to 8 mux boards with 32 identical devices behind them!
+  have up to 8 mux boards connected with 32 identical devices behind them!
 
   This example shows how to start the lib with a different Wire port and 
   a different I2C address on the mux. It will fail on the Uno because the Uno
