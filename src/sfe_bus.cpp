@@ -127,16 +127,16 @@ namespace sfe_PCA9846
     //
     // Write a block of data to a device.
 
-    int QwI2C::writeRegisterRegion(uint8_t i2c_address, uint8_t offset, const uint8_t *data, uint16_t length)
+    bool QwI2C::writeRegisterRegion(uint8_t i2c_address, uint8_t offset, const uint8_t *data, uint16_t length)
     {
         if (!_i2cPort)
-            return -1;
+            return false;
 
         _i2cPort->beginTransmission(i2c_address);
         _i2cPort->write(offset);
         _i2cPort->write(data, (int)length);
 
-        return _i2cPort->endTransmission() ? -1 : 0; // -1 = error, 0 = success
+        return _i2cPort->endTransmission() == 0;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,21 +145,21 @@ namespace sfe_PCA9846
     // Reads a single byte from the device.
     //
     //
-    int QwI2C::read(uint8_t address, uint8_t *data)
+    bool QwI2C::read(uint8_t address, uint8_t *data)
     {
         if (!_i2cPort)
-            return -1;
+            return false;
 
         uint8_t nReturned = _i2cPort->requestFrom((int)address, (int)1, (int)true);
 
         // Check we received the correct number of bytes
         if (nReturned != 1)
-            return -1; // error
+            return false; // error
 
         // Copy the retrieved data to the data segment
         *data = _i2cPort->read();
 
-        return 0; // Success
+        return true; // Success
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,27 +168,27 @@ namespace sfe_PCA9846
     // Reads a small block of data from an i2c register on the devices.
     //
     //
-    int QwI2C::readRegisterRegion(uint8_t address, uint8_t offset, uint8_t *data, uint8_t length)
+    bool QwI2C::readRegisterRegion(uint8_t address, uint8_t offset, uint8_t *data, uint8_t length)
     {
         if (!_i2cPort)
-            return -1;
+            return false;
 
         _i2cPort->beginTransmission(address);
         _i2cPort->write(offset);
         if (_i2cPort->endTransmission(false) != 0) // Do a restart
-            return -1; // error with the end transmission
+            return false; // error with the end transmission
 
         uint8_t nReturned = _i2cPort->requestFrom((int)address, (int)length, (int)true);
 
         // Check we received the correct number of bytes
         if (nReturned != length)
-            return -1; // error
+            return false; // error
 
         // Copy the retrieved data to the data segment
         for (uint8_t i = 0; i < nReturned; i++)
             *data++ = _i2cPort->read();
 
-        return 0; // Success
+        return true; // Success
     }
 
 }

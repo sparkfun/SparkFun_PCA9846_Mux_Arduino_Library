@@ -50,9 +50,9 @@ public:
     //  Parameter    Description
     //  ---------    -----------------------------
     //  data         The data to be written
-    //  retval       -1 = error, 0 = success
+    //  retval       false = error, true = success
 
-    int32_t write(uint8_t data);
+    bool write(uint8_t data);
 
     //////////////////////////////////////////////////////////////////////////////////
     // writeRegisterRegion()
@@ -63,9 +63,9 @@ public:
     //  reg          register to write to
     //  data         Array containing the data to be written
     //  length       Length of the data to written
-    //  retval       -1 = error, 0 = success
+    //  retval       false = error, true = success
 
-    int32_t writeRegisterRegion(uint8_t reg, uint8_t *data, uint16_t length);
+    bool writeRegisterRegion(uint8_t reg, uint8_t *data, uint16_t length);
 
     //////////////////////////////////////////////////////////////////////////////////
     // read()
@@ -74,9 +74,9 @@ public:
     //  Parameter    Description
     //  ---------    -----------------------------
     //  data         Array to store data in
-    //  retval       -1 = error, 0 = success
+    //  retval       false = error, true = success
 
-    int32_t read(uint8_t *data);
+    bool read(uint8_t *data);
 
     //////////////////////////////////////////////////////////////////////////////////
     // readRegisterRegion()
@@ -87,9 +87,9 @@ public:
     //  reg          register to read from
     //  data         Array to store data in
     //  length       Length of the data to read
-    //  retval       -1 = error, 0 = success
+    //  retval       false = error, true = success
 
-    int32_t readRegisterRegion(uint8_t reg, uint8_t *data, uint16_t length);
+    bool readRegisterRegion(uint8_t reg, uint8_t *data, uint16_t length);
 
     //////////////////////////////////////////////////////////////////////////////////
     // setCommunicationBus()

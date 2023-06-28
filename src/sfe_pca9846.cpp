@@ -63,9 +63,9 @@ uint32_t QwDevPCA9846::getUniqueId()
 {
 
     uint8_t chipID[3] = {0};
-    int retVal = _sfeBus->readRegisterRegion(SFE_PCA9846_MUX_DEVICE_ID_ADDRESS, _i2cAddress << 1, chipID, 3);
+    bool retVal = _sfeBus->readRegisterRegion(SFE_PCA9846_MUX_DEVICE_ID_ADDRESS, _i2cAddress << 1, chipID, 3);
 
-    if (retVal != 0)
+    if (!retVal)
         return 0;
 
     uint32_t ID = ((uint32_t)chipID[0]) << 16;
@@ -115,7 +115,7 @@ void QwDevPCA9846::setCommunicationBus(sfe_PCA9846::QwIDeviceBus &theBus)
 //  ---------    -----------------------------
 //  data         Data to be written
 
-int32_t QwDevPCA9846::write(uint8_t data)
+bool QwDevPCA9846::write(uint8_t data)
 {
     return _sfeBus->write(_i2cAddress, data);
 }
@@ -131,7 +131,7 @@ int32_t QwDevPCA9846::write(uint8_t data)
 //  data         Data to be written
 //  length       Number of bytes to be written
 
-int32_t QwDevPCA9846::writeRegisterRegion(uint8_t offset, uint8_t *data, uint16_t length)
+bool QwDevPCA9846::writeRegisterRegion(uint8_t offset, uint8_t *data, uint16_t length)
 {
     return _sfeBus->writeRegisterRegion(_i2cAddress, offset, data, length);
 }
@@ -145,7 +145,7 @@ int32_t QwDevPCA9846::writeRegisterRegion(uint8_t offset, uint8_t *data, uint16_
 //  ---------    -----------------------------
 //  data         Pointer to where data will be saved
 
-int32_t QwDevPCA9846::read(uint8_t *data)
+bool QwDevPCA9846::read(uint8_t *data)
 {
     return _sfeBus->read(_i2cAddress, data);
 }
@@ -161,7 +161,7 @@ int32_t QwDevPCA9846::read(uint8_t *data)
 //  data         Pointer to where data will be saved
 //  length       Number of bytes to be read
 
-int32_t QwDevPCA9846::readRegisterRegion(uint8_t offset, uint8_t *data, uint16_t length)
+bool QwDevPCA9846::readRegisterRegion(uint8_t offset, uint8_t *data, uint16_t length)
 {
     return _sfeBus->readRegisterRegion(_i2cAddress, offset, data, length);
 }
@@ -177,9 +177,7 @@ bool QwDevPCA9846::setPort(uint8_t portNumber)
     else
         portValue = 1 << portNumber;
 
-    if (_sfeBus->write(_i2cAddress, portValue) != 0)
-        return (false); // Device did not ACK
-    return (true);
+    return _sfeBus->write(_i2cAddress, portValue);
 }
 
 // Returns the first port number bit that is set
@@ -189,8 +187,8 @@ uint8_t QwDevPCA9846::getPort()
 {
     // Read the current mux settings
     uint8_t portBits;
-    int retVal = _sfeBus->read(_i2cAddress, &portBits);
-    if (retVal != 0)
+    bool retVal = _sfeBus->read(_i2cAddress, &portBits);
+    if (!retVal)
         return 254;
 
     // Search for the first set bit, then return its location
@@ -207,9 +205,7 @@ uint8_t QwDevPCA9846::getPort()
 // This allows us to enable/disable multiple ports at same time
 bool QwDevPCA9846::setPortState(uint8_t portBits)
 {
-    if (_sfeBus->write(_i2cAddress, portBits) != 0)
-        return (false); // Device did not ACK
-    return (true);
+    return _sfeBus->write(_i2cAddress, portBits);
 }
 
 // Gets the current port state
@@ -218,7 +214,8 @@ bool QwDevPCA9846::setPortState(uint8_t portBits)
 uint8_t QwDevPCA9846::getPortState()
 {
     uint8_t portBits;
-    if (_sfeBus->read(_i2cAddress, &portBits) != 0)
+    bool retVal = _sfeBus->read(_i2cAddress, &portBits);
+    if (!retVal)
         return 254;
     return portBits;
 }

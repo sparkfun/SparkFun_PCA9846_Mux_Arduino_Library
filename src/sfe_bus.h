@@ -45,11 +45,11 @@ namespace sfe_PCA9846
 
         virtual bool writeRegisterByte(uint8_t address, uint8_t offset, uint8_t data) = 0;
 
-        virtual int writeRegisterRegion(uint8_t address, uint8_t offset, const uint8_t *data, uint16_t length) = 0;
+        virtual bool writeRegisterRegion(uint8_t address, uint8_t offset, const uint8_t *data, uint16_t length) = 0;
 
-        virtual int read(uint8_t address, uint8_t *data) = 0;
+        virtual bool read(uint8_t address, uint8_t *data) = 0;
 
-        virtual int readRegisterRegion(uint8_t address, uint8_t offset, uint8_t *data, uint8_t length) = 0;
+        virtual bool readRegisterRegion(uint8_t address, uint8_t offset, uint8_t *data, uint8_t length) = 0;
     };
 
     // The QwI2C device defines behavior for I2C implementation based around the TwoWire class (Wire).
@@ -69,11 +69,11 @@ namespace sfe_PCA9846
 
         bool writeRegisterByte(uint8_t address, uint8_t offset, uint8_t data);
 
-        int writeRegisterRegion(uint8_t address, uint8_t offset, const uint8_t *data, uint16_t length);
+        bool writeRegisterRegion(uint8_t address, uint8_t offset, const uint8_t *data, uint16_t length);
 
-        int read(uint8_t address, uint8_t *data);
+        bool read(uint8_t address, uint8_t *data);
 
-        int readRegisterRegion(uint8_t address, uint8_t offset, uint8_t *data, uint8_t length);
+        bool readRegisterRegion(uint8_t address, uint8_t offset, uint8_t *data, uint8_t length);
 
     private:
         TwoWire *_i2cPort;
