@@ -1,7 +1,7 @@
 SparkFun PCA9846 Qwiic I2C Mux Arduino Library
 ===========================================================
 
- [![SparkX Qwiic Mux - PCA9846 (SPX-22362)](https://github.com/sparkfunX/Qwiic_Mux_PCA9846/blob/main/Hardware/Dimensions.png)](https://www.sparkfun.com/products/22362) 
+[![SparkX Qwiic Mux - PCA9846 (SPX-22362)](https://cdn.sparkfun.com/assets/parts/2/2/3/9/0/22362-_SPX-_01.jpg)](https://www.sparkfun.com/products/22362)
 
 [*SparkX Qwiic Mux - PCA9846 (SPX-22362)*](https://www.sparkfun.com/products/22362)
 
